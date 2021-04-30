@@ -21,4 +21,8 @@ jobs:
           ko resolve --bare -f test.yaml > release.yaml
           echo ${{ secrets.GITHUB_TOKEN }} > /tmp/token.txt
           gh auth login --with-token < /tmp/token.txt
-          gh release upload ${{ github.ref }} release.yaml
+          tag="${{ github.ref }}"
+          echo tag is $tag
+          tag=${tag#"$refs/tags/"}
+          echo tag is $tag
+          gh release upload $tag release.yaml
