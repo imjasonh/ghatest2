@@ -3,9 +3,6 @@ name: Release
 on:
   release:
     types: ['created']
-  # TODO only releases
-  push:
-    branches: ['main']
 
 jobs:
   release:
@@ -21,8 +18,11 @@ jobs:
       - uses: imjasonh/setup-ko@v0.3
       - name: Generate and upload release.yaml
         run: |
-          ko resolve --bare -f test.yaml > release.yaml
+          tag="${{ github.ref }}"
+          tag="${tag:10}"
+
+          ko resolve --bare -f test.yaml -t ${tag} > release.yaml
           echo ${{ secrets.GITHUB_TOKEN }} > /tmp/token.txt
           gh auth login --with-token < /tmp/token.txt
-          tag="${{ github.ref }}"
-          gh release upload "${tag:10}" release.yaml
+
+          gh release upload ${tag} release.yaml
