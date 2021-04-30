@@ -3,6 +3,9 @@ name: Release
 on:
   release:
     types: ['created']
+  # TODO only releases
+  push:
+    branches: ['main']
 
 jobs:
   release:
@@ -22,7 +25,4 @@ jobs:
           echo ${{ secrets.GITHUB_TOKEN }} > /tmp/token.txt
           gh auth login --with-token < /tmp/token.txt
           tag="${{ github.ref }}"
-          echo tag is $tag
-          tag=${tag:10} # strip refs/tags/
-          echo tag is $tag
-          gh release upload $tag release.yaml
+          gh release upload "${tag:10}" release.yaml
