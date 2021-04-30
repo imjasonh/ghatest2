@@ -5,12 +5,9 @@ on:
     types: ['created']
 
 jobs:
-  use-action:
-    name: Use Action
-    strategy:
-      matrix:
-        platform: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.platform }}
+  release:
+    name: Release
+    runs-on: ['ubuntu-latest']
 
     steps:
       - uses: actions/setup-go@v2
@@ -22,4 +19,6 @@ jobs:
       - name: Generate and upload release.yaml
         run: |
           ko resolve --bare -f test.yaml > release.yaml
+          echo ${{ secrets.GITHUB_TOKEN }} > /tmp/token.txt
+          gh auth login --with-token < /tmp/token.txt
           gh release upload ${{ github.ref }} release.yaml
