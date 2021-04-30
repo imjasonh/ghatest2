@@ -23,6 +23,6 @@ jobs:
           gh auth login --with-token < /tmp/token.txt
           tag="${{ github.ref }}"
           echo tag is $tag
-          tag=${tag#"$refs/tags/"}
+          tag=${tag:10} # strip refs/tags/
           echo tag is $tag
           gh release upload $tag release.yaml
