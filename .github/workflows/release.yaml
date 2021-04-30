@@ -17,8 +17,10 @@ jobs:
 
       - uses: imjasonh/setup-ko@v0.3
       - name: Generate and upload release.yaml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag=$(echo ${{ github.ref }} | cut -c11-)  # trim refs/tags/
           ko resolve --bare -f test.yaml -t ${tag} > release.yaml
-          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+          #echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
           gh release upload ${tag} release.yaml
