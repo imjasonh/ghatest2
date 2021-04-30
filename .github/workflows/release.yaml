@@ -9,6 +9,8 @@ jobs:
     name: Release
     runs-on: ['ubuntu-latest']
 
+    env:
+      KO_DOCKER_REPO: ko.local
     steps:
       - uses: actions/setup-go@v2
         with:
@@ -17,7 +19,4 @@ jobs:
       - uses: imjasonh/setup-ko@v0.3
 
       # publish to docker daemon
-      - run: KO_DOCKER_REPO=ko.local ko publish ./
-      - env:
-          KO_DOCKER_REPO: ko.local
-        run: ko publish ./
+      - run: ko publish ./
