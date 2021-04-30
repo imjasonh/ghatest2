@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  release:
+    types: ['created']
+
+jobs:
+  use-action:
+    name: Use Action
+    strategy:
+      matrix:
+        platform: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - uses: actions/checkout@v2
+
+      - uses: imjasonh/setup-ko@v0.3
+      - name: Generate and upload release.yaml
+        run: |
+          ko resolve --bare -f test.yaml > release.yaml
+          gh release upload ${{ github.ref }} release.yaml
