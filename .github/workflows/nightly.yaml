@@ -26,5 +26,5 @@ jobs:
 
           name=$(date +'%Y-%m-%d-%s')-$(git rev-parse HEAD | cut -c 1-8)
           echo release name is ${name}
-          ko resolve -f test.yaml > release-${name}.yaml
-          gh release upload nightly release-${name}.yaml
+          ko resolve -f test.yaml > nightly-${name}.yaml
+          gh release upload nightly nightly-${name}.yaml
