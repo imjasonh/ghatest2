@@ -22,9 +22,9 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           # Create nightly release if it doesn't exist; ignore failure
-          gh release create nightly --prerelease --title "Nightly releases" || true
+          gh release create nightly --prerelease --notes "Nightly releases" --title "Nightly releases" || true
 
-          commit=$(git rev-parse HEAD | cut -c 1-8)
-          echo commit is $commit
-          ko resolve -f test.yaml > release-${commit}.yaml
-          gh release upload nightly release-${commit}.yaml
+          name=$(date +'%Y-%m-%d-%s')-$(git rev-parse HEAD | cut -c 1-8)
+          echo release name is ${name}
+          ko resolve -f test.yaml > release-${name}.yaml
+          gh release upload nightly release-${name}.yaml
