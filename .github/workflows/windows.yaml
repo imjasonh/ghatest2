@@ -33,7 +33,8 @@ jobs:
           fi
 
       # publish to docker daemon
-      - run: docker run $(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish ./)
+      - shell: bash
+        run: docker run $(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish ./)
 
       # publish to GHCR
       #- run: docker run $(ko.exe publish ./)
