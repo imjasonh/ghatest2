@@ -30,13 +30,16 @@ jobs:
             os="Darwin"
           fi
 
+          # NOTES:
+          # - no sudo
+          # - ko.exe
           if [[ ! -z ${tag} ]]; then
             echo "Installing ko @ ${tag} for ${os}"
-            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C /usr/local/bin ko
+            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C /usr/local/bin ko.exe
           fi
 
       # publish to docker daemon
-      - run: docker run $(KO_DOCKER_REPO=ko.local ko publish ./)
+      - run: docker run $(KO_DOCKER_REPO=ko.local ko.exe publish ./)
 
       # publish to GHCR
-      #- run: docker run $(ko publish ./)
+      #- run: docker run $(ko.exe publish ./)
