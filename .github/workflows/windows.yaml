@@ -21,6 +21,7 @@ jobs:
 
           # Install ko
           tag=$(curl -s https://api.github.com/repos/google/ko/releases/latest | jq -r '.tag_name')
+          os="Windows"
 
           # NOTES:
           # - no sudo
