@@ -35,7 +35,7 @@ jobs:
       # publish to docker daemon
       - shell: bash
         run: |
-          img=$(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish --platform=all ./)
+          img=$(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish --platform windows/amd64 ./)
           echo "image is $img"
           docker run $img
 
