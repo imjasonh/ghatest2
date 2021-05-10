@@ -34,7 +34,7 @@ jobs:
 
       # publish to docker daemon
       - shell: bash
-        run: docker run $(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish ./)
+        run: docker run $(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish ./ --platform=all)
 
       # publish to GHCR
       #- run: docker run $(ko.exe publish ./)
