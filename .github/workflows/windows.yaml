@@ -39,7 +39,7 @@ jobs:
       # publish to docker daemon
       - shell: bash
         env:
-          KO_DOCKER_REPO=ghcr.io/imjasonh/ghatest2
+          KO_DOCKER_REPO: ghcr.io/imjasonh/ghatest2
         run: |
           img=$(ko.exe publish --platform windows/amd64 ./)
           echo "image is $img"
