@@ -16,5 +16,5 @@ jobs:
     steps:
     - run: |
         docker version
-        docker run gcr.io/imjasonh/ghatest2-3b797f3433e868656fc12cc06198c02c@sha256:2f04a165aa9b3ccd008a4f4c90772efb8f4bbd9d33201ed8ee87b38c83e65629
+        docker run gcr.io/imjasonh/ghatest2-3b797f3433e868656fc12cc06198c02c@sha256:f0631af760a78fea65ca3633e03bf568c451568bae7f894d250bf9df449df01e
 
