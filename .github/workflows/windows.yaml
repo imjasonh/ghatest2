@@ -12,7 +12,37 @@ jobs:
         with:
           go-version: 1.16
       - uses: actions/checkout@v2
-      - uses: imjasonh/setup-ko@v0.4
+
+      #- uses: imjasonh/setup-ko@v0.4
+      
+      - run: |
+        set -ex
+
+        # Install ko:
+        # - if version is "tip", install from tip of main.
+        # - if version is "latest-release", look up latest release.
+        # - otherwise, install the specified version.
+        case ${{ inputs.version }} in
+        tip)
+          echo "Installing ko using go get"
+          go get github.com/google/ko@main
+          ;;
+        latest-release)
+          tag=$(curl -s https://api.github.com/repos/google/ko/releases/latest | jq -r '.tag_name')
+          ;;
+        *)
+          tag="${{ inputs.version }}"
+        esac
+
+        os=${{ runner.os }}
+        if [[ $os == "macOS" ]]; then
+          os="Darwin"
+        fi
+
+        if [[ ! -z ${tag} ]]; then
+          echo "Installing ko @ ${tag} for ${os}"
+          curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C /usr/local/bin ko
+        fi
 
       # publish to docker daemon
       - run: docker run $(KO_DOCKER_REPO=ko.local ko publish ./)
