@@ -16,5 +16,6 @@ jobs:
     steps:
     - run: |
         docker version
-        echo "image is ${{ github.events.inputs.image }}"
-        docker run "${{ github.events.inputs.image }}"
+        docker run gcr.io/imjasonh/ghatest2-3b797f3433e868656fc12cc06198c02c@sha256:81cef372b5dd1ef919dd284f661dc25b9708c1ba23e8e5545f03a9d3f9340fa8
+        docker run gcr.io/imjasonh/ghatest2-3b797f3433e868656fc12cc06198c02c@sha256:accc06a18d59f1913bf05f31f5969c6597d3370221bf81e0a7d1174b35aa59e1
+
