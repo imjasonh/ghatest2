@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: Image to run
+        required: true
+        default: mcr.microsoft.com/windows/nanoserver:1903
+
+jobs:
+  windows:
+    name: Windows
+    runs-on: ['windows-latest']
+
+    steps:
+    - run: docker run ${{ github.events.inputs.image }}
