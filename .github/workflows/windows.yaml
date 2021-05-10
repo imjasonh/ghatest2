@@ -28,10 +28,10 @@ jobs:
           # NOTES:
           # - no sudo
           # - ko.exe
-          # - Program Files
+          # - C:/Users/runneradmin/bin
           if [[ ! -z ${tag} ]]; then
             echo "Installing ko @ ${tag} for ${os}"
-            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C $PATH ko.exe
+            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C C:/Users/runneradmin/bin ko.exe
           fi
 
       # publish to docker daemon
