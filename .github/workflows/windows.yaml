@@ -16,12 +16,16 @@ jobs:
       #- uses: imjasonh/setup-ko@v0.4
       
       - shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -ex
 
           # Install ko
           tag=$(curl -s https://api.github.com/repos/google/ko/releases/latest | jq -r '.tag_name')
           os="Windows"
+
+          echo ${GITHUB_TOKEN} | docker login ghcr.io --username nonsense --password-stdin
 
           # NOTES:
           # - no sudo
@@ -35,7 +39,7 @@ jobs:
       # publish to docker daemon
       - shell: bash
         run: |
-          img=$(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish --platform windows/amd64 ./)
+          img=$(KO_DOCKER_REPO=ghcr.io/imjasonh/ghatest2 C:\\ProgramData\\ko.exe publish --platform windows/amd64 ./)
           echo "image is $img"
           docker run $img
 
