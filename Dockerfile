@@ -1,2 +1,2 @@
-FROM microsoft/windowsservercore
+FROM hello-world
 CMD echo hello
