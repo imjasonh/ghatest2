@@ -34,7 +34,10 @@ jobs:
 
       # publish to docker daemon
       - shell: bash
-        run: docker run $(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish ./ --platform=all)
+        run: |
+          img=$(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish --platform=all ./)
+          echo "image is $img"
+          docker run $img
 
       # publish to GHCR
       #- run: docker run $(ko.exe publish ./)
