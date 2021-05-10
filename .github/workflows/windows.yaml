@@ -16,4 +16,5 @@ jobs:
     steps:
     - run: |
         docker version
+        echo image is ${{ github.events.inputs.image }}
         docker run ${{ github.events.inputs.image }}
