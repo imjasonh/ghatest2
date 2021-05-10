@@ -15,7 +15,8 @@ jobs:
 
       #- uses: imjasonh/setup-ko@v0.4
       
-      - run: |
+      - shell: bash
+        run: |
           set -ex
 
           # Install ko:
