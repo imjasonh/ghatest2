@@ -1,0 +1,25 @@
+name: Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: foo
+        required: true
+
+jobs:
+  manual:
+    name: Manual
+    runs-on: ['windows-latest']
+
+    steps:
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - uses: actions/checkout@v2
+
+      - shell: bash
+        run: |
+          docker version
+          docker pull ${{ github.event.inputs.image }}
+          docker run ${{ github.event.inputs.image }}
