@@ -1,6 +1,6 @@
 name: Windows
 
-on: ['workflow_dispatch']
+on: ['push', 'workflow_dispatch']
 
 jobs:
   windows:
@@ -19,16 +19,8 @@ jobs:
         run: |
           set -ex
 
-          # Install ko:
-          # - if version is "tip", install from tip of main.
-          # - if version is "latest-release", look up latest release.
-          # - otherwise, install the specified version.
+          # Install ko
           tag=$(curl -s https://api.github.com/repos/google/ko/releases/latest | jq -r '.tag_name')
-
-          os=${{ runner.os }}
-          if [[ $os == "macOS" ]]; then
-            os="Darwin"
-          fi
 
           # NOTES:
           # - no sudo
@@ -36,11 +28,11 @@ jobs:
           # - ProgramData
           if [[ ! -z ${tag} ]]; then
             echo "Installing ko @ ${tag} for ${os}"
-            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C C:\ProgramData\ ko.exe
+            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C C:\\ProgramData\\ ko.exe
           fi
 
       # publish to docker daemon
-      - run: docker run $(KO_DOCKER_REPO=ko.local C:\ProgramData\ko.exe publish ./)
+      - run: docker run $(KO_DOCKER_REPO=ko.local C:\\ProgramData\\ko.exe publish ./)
 
       # publish to GHCR
       #- run: docker run $(ko.exe publish ./)
