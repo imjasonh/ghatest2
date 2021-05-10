@@ -13,13 +13,16 @@ jobs:
     runs-on: ['windows-latest']
 
     steps:
-      - uses: actions/setup-go@v2
-        with:
-          go-version: 1.16
-      - uses: actions/checkout@v2
+    - shell: bash
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        docker version
 
-      - shell: bash
-        run: |
-          docker version
-          docker pull ${{ github.event.inputs.image }}
-          docker run ${{ github.event.inputs.image }}
+        docker build -t ghcr.io/imjasonh/ghatest2/test .
+        docker run ghcr.io/imjasonh/ghatest2/test
+        echo ${GITHUB_TOKEN} | docker login ghcr.io --username nonsense --password-stdin
+        docker push gcr.io/imjasonh/ghatest2/test
+
+        docker pull ${{ github.event.inputs.image }}
+        docker run ${{ github.event.inputs.image }}
