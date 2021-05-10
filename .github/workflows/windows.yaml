@@ -14,4 +14,6 @@ jobs:
     runs-on: ['windows-latest']
 
     steps:
-    - run: docker run ${{ github.events.inputs.image }}
+    - run: |
+        docker version
+        docker run ${{ github.events.inputs.image }}
