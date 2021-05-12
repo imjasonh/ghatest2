@@ -24,12 +24,10 @@ jobs:
       run: |
         docker version
 
+        docker pull ${{ github.event.inputs.image }}
+        docker run ${{ github.event.inputs.image }}
+
         docker build -t ghcr.io/imjasonh/ghatest2/test .
         docker run ghcr.io/imjasonh/ghatest2/test
         echo ${GITHUB_TOKEN} | docker login ghcr.io --username nonsense --password-stdin
-        docker push gcr.io/imjasonh/ghatest2/test
 
-        go build -o app ./
-
-        docker pull ${{ github.event.inputs.image }}
-        docker run ${{ github.event.inputs.image }}
