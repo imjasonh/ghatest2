@@ -15,7 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Go dev.typeparams from tip
-      if: matrix.go == 'tip'
       working-directory: ${{ github.workspace }}
       run: |
         git clone https://go.googlesource.com/go $HOME/gotip
