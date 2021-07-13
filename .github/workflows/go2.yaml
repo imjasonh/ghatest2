@@ -23,5 +23,7 @@ jobs:
         ./make.bash
         echo "GOROOT=$HOME/gotip" >> $GITHUB_ENV
         echo "$HOME/gotip/bin:$PATH" >> $GITHUB_PATH
+        rm -r /opt/hostedtoolcache/go # Remove old Go
 
+    - run: go version
     - run: go build -gcflags=-G=3 -o foo ./go2/ && ./foo
