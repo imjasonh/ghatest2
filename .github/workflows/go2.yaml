@@ -1,0 +1,28 @@
+name: Go2
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ['main']
+  push:
+    branches: ['main']
+
+jobs:
+  go2:
+    name: Go2
+    runs-on: ['ubuntu-latest']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Go dev.typeparams from tip
+      if: matrix.go == 'tip'
+      working-directory: ${{ github.workspace }}
+      run: |
+        git clone https://go.googlesource.com/go $HOME/gotip
+        cd $HOME/gotip/src
+        git checkout dev.typeparams
+        ./make.bash
+        echo "GOROOT=$HOME/gotip" >> $GITHUB_ENV
+        echo "$HOME/gotip/bin:$PATH" >> $GITHUB_PATH
+
+    - run: go build -gcflags=-G=3 ./go2/
