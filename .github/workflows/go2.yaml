@@ -25,4 +25,4 @@ jobs:
         echo "GOROOT=$HOME/gotip" >> $GITHUB_ENV
         echo "$HOME/gotip/bin:$PATH" >> $GITHUB_PATH
 
-    - run: go build -gcflags=-G=3 ./go2/
+    - run: go build -gcflags=-G=3 -o foo ./go2/ && ./foo
