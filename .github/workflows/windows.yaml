@@ -1,6 +1,11 @@
 name: Windows
 
-on: ['push', 'workflow_dispatch']
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: image to run
+        required: true
 
 jobs:
   windows:
@@ -8,40 +13,4 @@ jobs:
     runs-on: ['windows-latest']
 
     steps:
-      - uses: actions/setup-go@v2
-        with:
-          go-version: 1.16
-      - uses: actions/checkout@v2
-
-      #- uses: imjasonh/setup-ko@v0.4
-      
-      - shell: bash
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          # Install ko
-          tag=$(curl -s https://api.github.com/repos/google/ko/releases/latest | jq -r '.tag_name')
-          os="Windows"
-
-          echo ${GITHUB_TOKEN} | docker login ghcr.io --username nonsense --password-stdin
-
-          # NOTES:
-          # - no sudo
-          # - ko.exe
-          # - C:/ProgramUsers/runneradmin/bin
-          if [[ ! -z ${tag} ]]; then
-            echo "Installing ko @ ${tag} for ${os}"
-            curl -fsL https://github.com/google/ko/releases/download/${tag}/ko_${tag:1}_${os}_x86_64.tar.gz | tar xzf - -C C:\\ProgramData\\ ko.exe
-          fi
-
-      # publish to docker daemon
-      - shell: bash
-        env:
-          KO_DOCKER_REPO: ghcr.io/imjasonh/ghatest2
-        run: |
-          img=$(C:\\ProgramData\\ko.exe publish --platform windows/amd64 ./)
-          echo "image is $img"
-          docker run $img
-
-      # publish to GHCR
-      #- run: docker run $(ko.exe publish ./)
+    - run: docker run ${{ github.event.inputs.image }}
